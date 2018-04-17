@@ -15,6 +15,7 @@ type Ship struct {
 	Sunk      bool
 }
 
+// CreateFleet takes in the number and length of ships
 func CreateFleet(ships []int, dimension int) Fleet {
 	var fleet Fleet
 	for _, ship := range ships {
@@ -24,6 +25,7 @@ func CreateFleet(ships []int, dimension int) Fleet {
 	return fleet
 }
 
+// AddInDirection moves towards the end of the ship based on its direction
 func AddInDirection(row, column int, direction string) (int, int) {
 	switch direction {
 	case "right":
