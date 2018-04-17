@@ -5,8 +5,10 @@ import (
 	"time"
 )
 
+// Fleet carries many ship
 type Fleet []Ship
 
+// Ship holds the information needed to easily check for a sunken ship
 type Ship struct {
 	Length    int
 	StartRow  int
@@ -15,6 +17,7 @@ type Ship struct {
 	Sunk      bool
 }
 
+// CreateFleet takes in the number and length of ships
 func CreateFleet(ships []int, dimension int) Fleet {
 	var fleet Fleet
 	for _, ship := range ships {
@@ -24,6 +27,7 @@ func CreateFleet(ships []int, dimension int) Fleet {
 	return fleet
 }
 
+// AddInDirection moves towards the end of the ship based on its direction
 func AddInDirection(row, column int, direction string) (int, int) {
 	switch direction {
 	case "right":
@@ -41,12 +45,12 @@ func AddInDirection(row, column int, direction string) (int, int) {
 
 func createShip(length int, dimension int) Ship {
 	var ship Ship
-	row, col, direction := createValid(length, dimension)
+	row, column, direction := createValid(length, dimension)
 
 	ship = Ship{
 		Length:    length,
 		StartRow:  row,
-		StartCol:  col,
+		StartCol:  column,
 		Direction: direction,
 		Sunk:      false,
 	}
@@ -54,18 +58,18 @@ func createShip(length int, dimension int) Ship {
 	return ship
 }
 
-func createValid(length, dimension int) (row int, col int, direction string) {
+func createValid(length, dimension int) (row int, column int, direction string) {
 	for {
-		row, col = getCoordinates(dimension)
+		row, column = getCoordinates(dimension)
 		direction = getDirection()
 
 		switch direction {
 		case "right":
-			if (col + length - 1) >= dimension {
+			if (column + length - 1) >= dimension {
 				continue
 			}
 		case "left":
-			if (col - length - 1) < 0 {
+			if (column - length - 1) < 0 {
 				continue
 			}
 		case "up":
@@ -81,11 +85,12 @@ func createValid(length, dimension int) (row int, col int, direction string) {
 		break
 	}
 
-	return row, col, direction
+	return row, column, direction
 }
 
 func getCoordinates(dimension int) (int, int) {
 	rand.Seed(time.Now().UnixNano())
+
 	return rand.Intn(dimension), rand.Intn(dimension)
 }
 
@@ -93,5 +98,6 @@ func getDirection() string {
 	rand.Seed(time.Now().UnixNano())
 	directions := []string{"left", "right", "up", "down"}
 	randNum := rand.Intn(len(directions))
+
 	return directions[randNum]
 }

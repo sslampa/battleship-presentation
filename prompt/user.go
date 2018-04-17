@@ -9,10 +9,7 @@ import (
 func Username() (name string, err error) {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Please enter your name: ")
-	name, err = reader.ReadString('\n')
-	if err != nil {
-		return "", err
-	}
+	name, _ = reader.ReadString('\n')
 
 	return name, nil
 }
